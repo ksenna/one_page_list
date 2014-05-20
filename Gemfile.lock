@@ -29,6 +29,8 @@ GEM
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
     bcrypt (3.1.7)
+    bldr (1.0.1)
+      multi_json
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
     builder (3.2.2)
@@ -77,8 +79,11 @@ GEM
     mime-types (1.25.1)
     minitest (5.3.4)
     multi_json (1.10.0)
+    oj (2.9.3)
     pg (0.17.1)
     polyglot (0.3.4)
+    rabl (0.9.3)
+      activesupport (>= 2.3.14)
     rack (1.5.2)
     rack-contrib (1.1.0)
       rack (>= 0.9.1)
@@ -157,6 +162,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt (~> 3.1.7)
+  bldr
   bootstrap-sass (~> 3.1.1)
   coffee-rails (~> 4.0.0)
   factory_girl_rails
@@ -167,7 +173,9 @@ DEPENDENCIES
   jquery-turbolinks
   meta_request
   minitest
+  oj
   pg
+  rabl
   rails (= 4.1.0)
   rails_12factor
   rspec-rails

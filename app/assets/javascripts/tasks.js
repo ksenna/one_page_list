@@ -18,6 +18,7 @@ $(function(){
 		$('#task_li').replace('<li>' + title + '</li>');
 	});
 
+
 	$('#deleteTask').click(function(){
 		var task_li = $(this).parent();
 		var id = $(this).attr("id");

@@ -1,7 +1,9 @@
 class Task < ActiveRecord::Base
 
-scope :incomplete, -> { where(completed: false) }
+	belongs_to :user
 
-validates_presence_of :title
+	scope :incomplete, -> { where(completed: false) }
+
+	validates_presence_of :title
 
 end

@@ -3,11 +3,12 @@
 	%p
 		Add tasks to your list. As you complete a task, mark it complete!
 	%br
-	%a{:href => '#modal-one', class: "btn btn-big"} Modal
+	%a{'href' => '#', class: ".toggleModal"} Modal
 %ul#taskList
 	- @tasks.each do |task|
 		%li= task.title
-		= link_to 'X', task_path(task), id: "deleteTask", remote: true, method: :delete, data: {confirm: "Are you sure?"}
+		= link_to 'Remove Task', task, remote: true, method: :delete
+		= link_to 'X', task_path(task), id: "deleteTask", method: :delete, data: {confirm: "Are you sure?"}
 		= link_to 'Edit', edit_task_path(task), remote: true
 
 = form_for Task.new, id: "newTask", remote: true do |f|
@@ -15,8 +16,12 @@
 	= f.submit "Add"
 
 
+/ New Modal
+.modal
+
+
 / Modal
-#modal-one.modal{"aria-hidden" => "true"}
+#modal-one-modal{"aria-hidden" => "true"}
 	.modal-dialog
 		.modal-header
 			%h2 Create A New Task
@@ -29,17 +34,31 @@
 			
 :javascript
 
+	$('.toggleModal').on('click', function(e) {
+		$('body').toggleClass('prevent');
+		$('.modal').toggleClass('active');
+	});
+
+
+
+
+
+
+	$(document).on('click', '#deleteTask', function(){});
+
 	$('#deleteTask').click(function(){
 		var list = $(this).parents('ul'),
 		var task_id = $(this).attr('data-task-id');
 
-			$.ajax({
-				url: "/tasks/" + task_id,
-				type: 'POST',
-				data: {"_method":"delete"},
-				success: function(data){
-					alert('Successfully deleted');
-				}
+		$.ajax({
+			url: "/tasks/" + task_id,
+			type: 'POST',
+			dataType: "JSON",
+			data: {"_method":"delete"},
+			success: function(data){
+				alert('Successfully deleted');
+				$('li').remove();
+			}
 			});
 	});
 
