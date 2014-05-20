@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 	def index
 		@tasks = Task.all
 		respond_to do |format|
-			format.json
+			format.js
 			format.html
 		end
 	end

@@ -7,12 +7,16 @@
 %ul#taskList
 	- @tasks.each do |task|
 		%li= task.title
-		= link_to 'Remove Task', task, remote: true, method: :delete
+		= button_tag 'Remove Task', class: "deleteTask", id: task.id, data: { "task-id" => task.id }
 		= link_to 'X', task_path(task), id: "deleteTask", method: :delete, data: {confirm: "Are you sure?"}
 		= link_to 'Edit', edit_task_path(task), remote: true
 
+
+
 = form_for Task.new, id: "newTask", remote: true do |f|
 	= f.text_field :title
+	= f.label "User"
+	= f.select :user_id, User.all.collect {|u| [ u.name, u.id ]}
 	= f.submit "Add"
 
 
@@ -32,36 +36,3 @@
 				= f.text_field :title
 				= f.submit "Add Task", class: "btn"
 			
-:javascript
-
-	$('.toggleModal').on('click', function(e) {
-		$('body').toggleClass('prevent');
-		$('.modal').toggleClass('active');
-	});
-
-
-
-
-
-
-	$(document).on('click', '#deleteTask', function(){});
-
-	$('#deleteTask').click(function(){
-		var list = $(this).parents('ul'),
-		var task_id = $(this).attr('data-task-id');
-
-		$.ajax({
-			url: "/tasks/" + task_id,
-			type: 'POST',
-			dataType: "JSON",
-			data: {"_method":"delete"},
-			success: function(data){
-				alert('Successfully deleted');
-				$('li').remove();
-			}
-			});
-	});
-
-	$(document).on('ajax:success', '#deleteTask', function(){
-		$(this).parent().slideUp();
-	});

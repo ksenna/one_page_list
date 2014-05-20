@@ -1,8 +1,12 @@
 $(function(){
 
-	$('close').click(function(){
+	$(document).ready(function(){
+		$('#modal').hide();
 
-	})
+		$('.showmodal').click(function(){
+			$('#modal').show();
+		});
+	});
 
 	$('form').on('ajax:complete', function(event, data, status, xhr){
 		var task = $.parseJSON(data.responseText),
@@ -19,20 +23,27 @@ $(function(){
 	});
 
 
-	$('#deleteTask').click(function(){
+	$('.deleteTask').on('click', function(){
 		var task_li = $(this).parent();
-		var id = $(this).attr("id");
+		var id = $(this).attr('id');
 		var task_id = $(this).attr('data-task-id');
 
 		$.ajax({
 			url: "/tasks/" + task_id,
 //			type: "POST"
 			type: "DELETE",
-			dataType: "JSON"
+//			dataType: "JSON"
 //			data: {"_method":"delete"},
 
-			}).success(function(json){
+//			}).success(function(json){
+				success: function(data){
 				console.log("Task Deleted");
+				if (data == "1") {
+					window.location.reload();
+				}
+				else
+					console.log("Failed");
+				}
 			});			
 		});
 

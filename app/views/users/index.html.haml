@@ -1,0 +1,23 @@
+%h1 All Users
+
+- @users.each do |u|
+	Name:
+	= u.name
+	%br
+	Tasks:
+	= Task.where(user_id: u.id).pluck(:title).first
+	%br
+	Colors:
+	= u.id
+	%ul
+	- u.colors.each do |color|
+		%li= color.name
+	%br
+	%br
+
+
+= button_to "Add User", new_user_path, method: "get"
+
+= form_for User.new, id: "newUser", remote: true do |f|
+	= f.text_field :name
+	= f.submit "Add"

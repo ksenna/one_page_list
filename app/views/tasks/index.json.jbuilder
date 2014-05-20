@@ -1,1 +1,1 @@
-index.json.jbuilder
+json.partial! 'tasks/tasks', tasks: @tasks
