@@ -1,0 +1,29 @@
+.wrap
+	%h1 One Page Task List
+	%p
+		Add tasks to your list. As you complete a task, mark it complete!
+	%br
+	%a{:href => '#modal-one', class: "btn btn-big"} Modal
+%ul#taskList
+	- @tasks.each do |task|
+		%li= task.title
+		= link_to 'x', task_path(task), id: "deleteTask", remote: true, method: :delete, data: {confirm: "Are you sure?"}
+		= link_to 'Edit', edit_task_path(task), remote: true
+
+= form_for Task.new, id: "newTask", remote: true do |f|
+	= f.text_field :title
+	= f.submit "Add"
+
+
+/ Modal
+#modal-one.modal{"aria-hidden" => "true"}
+	.modal-dialog
+		.modal-header
+			%h2 Create A New Task
+			%a.btn-close{"aria-hidden" => "true", :href => "#"} ×
+		.modal-body
+			%p Enter your new task below:
+			= form_for Task.new, id: "newTask", remote: true do |f|
+				= f.text_field :title
+				= f.submit "Add Task", class: "btn"
+			
