@@ -21,20 +21,18 @@ $(function(){
 	$('#deleteTask').click(function(){
 		var task_li = $(this).parent();
 		var id = $(this).attr("id");
-		var string = 'id='+ id;
 		var task_id = $(this).attr('data-task-id');
 
 		$.ajax({
 			url: "/tasks/" + task_id,
-			type: "POST"
-			dataType: "json"
-			contentType: "application/json",
-			beforeSend: function(xhr)
-			{
-				xhr.setRequestHeader("X-Http-Method-Override", "DELETE");
-			}
-			
+//			type: "POST"
+			type: "DELETE",
+			dataType: "JSON"
+//			data: {"_method":"delete"},
+
+			}).success(function(json){
+				console.log("Task Deleted");
+			});			
 		});
-	});
 
 });
